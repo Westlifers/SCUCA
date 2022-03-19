@@ -1064,6 +1064,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .progress-table .table-head {
   display: flex;
+  text-align: left;
 }
 
 .progress-table .table-head .serial, .progress-table .table-head .username, .progress-table .table-head .time, .progress-table .table-head .speed {
