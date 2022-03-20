@@ -23,7 +23,7 @@
                       <div class="time">平均</div>
                       <div class="speed">还原速度可视化</div>
                     </div>
-                    <div class="table-row" v-for="(user, index_inner) in item" :key="index_inner">
+                    <div class="table-row" v-for="(user, index_inner) in item.slice(0,slice_num(name))" :key="index_inner">
                       <div class="serial">{{ index_inner + 1 }}</div>
                       <div class="username">{{ user.name }}</div>
                       <div class="time">{{ user.time[0] }}</div>
@@ -35,7 +35,7 @@
                       <div class="time avg">{{ average(user.time) }}</div>
                       <div class="speed">
                         <div class="progress">
-                          <div class="progress-bar color-1" role="progressbar" :style="{width: get_best_of(name)/average(user.time)*100 + '%' }"></div>
+                          <div class="progress-bar color-1" role="progressbar" :style="{width: get_best_avg_of(name)/average(user.time)*100 + '%' }"></div>
                         </div>
                       </div>
                     </div>
@@ -79,7 +79,7 @@
                     <div class="time avg">{{ average(user.time) }}</div>
                     <div class="speed">
                       <div class="progress">
-                        <div class="progress-bar color-1" role="progressbar" :style="{width: get_best_of(item)/average(user.time)*100 + '%' }"></div>
+                        <div class="progress-bar color-1" role="progressbar" :style="{width: get_best_avg_of(item)/average(user.time)*100 + '%' }"></div>
                       </div>
                     </div>
                   </div>
@@ -103,22 +103,27 @@
 export default {
   name: 'ResultForm',
   props: ['type', 'item'],      // type: all/single; item: e.g. 333, 444...
-  inject: ['scores'],
+  inject: ['scores'],           // 父组件请provide 'scores'
   computed: {
-    slice_num(){
-      return this.scores.length>=5?5:this.scores.length
-    },
+    // 如果是single模式，给出该项目的成绩表
     spec_item_scores(){
       return this.item?this.scores[this.item]:{}
     }
   },
   methods: {
+    // 返回all模式下，给定项目希望截取的长度
+    slice_num(item){
+      return this.scores[item].length>=5?5:this.scores.length
+    },
+    // 返回一个列表最好的成绩
     best(list){
       return list.reduce((a, b) => Math.min(a, b))
     },
+    // 返回一个列表最差成绩
     worst(list){
       return list.reduce((a, b) => Math.max(a, b))
     },
+    // 返回一个列表的平均成绩，注意没有考虑三把的项目，今后确定三把的储存形式再改
     average(list){
       var best = this.best(list)
       var worst = this.worst(list)
@@ -132,11 +137,12 @@ export default {
       avg = avg/(list.length-2)
       return avg.toFixed(3)
     },
-    get_best_of(item){
+    // 返回一个项目最好的平均成绩，用于显示可视化速度
+    get_best_avg_of(item){
       var all_users_for_this_item = this.scores[item]
       var list = []
       for (let user of all_users_for_this_item){
-          list.push(this.best(user.time))
+          list.push(this.average(user.time))
       }
       return list.reduce((a, b) => Math.min(a, b))
     },

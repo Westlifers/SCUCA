@@ -1,26 +1,22 @@
 <template>
-  <all-navbar></all-navbar>
-  <nice-title title="welcome!"></nice-title>
-  <submit-form />
+  <director-bar />
+  <featre-area />
+  <story-area />
 </template>
 
 <script>
-import AllNavbar from '../sub/AllNavbar.vue'
-import NiceTitle from '../sub/NiceTitle.vue'
-import SubmitForm from '../sub/SubmitForm.vue'
+import DirectorBar from '../sub/DirectorBar.vue'
+import StoryArea from '../sub/StoryArea.vue'
+import FeatreArea from '../sub/FeatureArea.vue'
 
 export default {
   name: 'IndexView',
   components: {
-    AllNavbar,
-    NiceTitle,
-    SubmitForm
-  },
-  provide() {
-    return {
-      scores: this.scores
-    }
+    DirectorBar,
+    FeatreArea,
+    StoryArea,
   }
 }
+
 </script>
 

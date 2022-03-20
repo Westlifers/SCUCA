@@ -1,6 +1,19 @@
 <template>
-  <router-view/>
+  <all-navbar />
+  <router-view />
+  <footer-info />
 </template>
+
+<script>
+import AllNavbar from './components/sub/AllNavbar.vue'
+import FooterInfo from './components/sub/FooterInfo.vue'
+export default {
+  components: {
+    AllNavbar,
+    FooterInfo
+  }
+}
+</script>
 
 <style>
 #app {
