@@ -41,7 +41,7 @@
                     </div>
                     <div class="take-part mt-30">
                       <!-- 此处超链接到各个项目的提交页面 -->
-                      <a href="#" class="genric-btn success circle">立即参加此项目</a>
+                      <router-link :to="'/rank/' + name" class="genric-btn success circle">立即参加此项目</router-link>
                     </div>
                   </div>
                 </div>
@@ -83,10 +83,6 @@
                       </div>
                     </div>
                   </div>
-                  <div class="take-part mt-30">
-                    <!-- 此处超链接到各个项目的提交页面 -->
-                    <a href="#" class="genric-btn success circle">立即参加此项目</a>
-                  </div>
                 </div>
               </div>
             </div>
@@ -126,15 +122,22 @@ export default {
     // 返回一个列表的平均成绩，注意没有考虑三把的项目，今后确定三把的储存形式再改
     average(list){
       var best = this.best(list)
+      var best_count = 0            // fix bug: 有成绩相同，可能被重复记作最好/最差，导致平均计算错误，故加入计数器
       var worst = this.worst(list)
+      var worst_count = 0
       var avg = 0
       for (let t of list){
-        if (t == best || t == worst){
+        if (t == best && best_count == 0){
+          best_count = best_count + 1
+          continue
+        }
+        else if (t == worst && worst_count == 0){
+          worst_count = worst_count + 1
           continue
         }
         avg = avg + t
       }
-      avg = avg/(list.length-2)
+      avg = avg/3
       return avg.toFixed(3)
     },
     // 返回一个项目最好的平均成绩，用于显示可视化速度
