@@ -9,7 +9,7 @@
             </div>
             <div class="main-menubar d-flex align-items-center">
               <nav class="hide">
-                <router-link to="/">Home</router-link>
+                <router-link to="/" @click="reload()">Home</router-link>
               </nav>
               <div class="menu-bar"><span class="lnr lnr-menu"></span></div>
             </div>
@@ -28,5 +28,6 @@ export default {
       publicPath: process.env.BASE_URL
     }
   },
+  inject: ['reload']
 }
 </script>

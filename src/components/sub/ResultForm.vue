@@ -41,7 +41,7 @@
                     </div>
                     <div class="take-part mt-30">
                       <!-- 此处超链接到各个项目的提交页面 -->
-                      <router-link :to="'/rank/' + name" class="genric-btn success circle">立即参加此项目</router-link>
+                      <router-link :to="'/rank/' + name" class="genric-btn success circle" @click="reload()">立即参加此项目</router-link>
                     </div>
                   </div>
                 </div>
@@ -99,7 +99,7 @@
 export default {
   name: 'ResultForm',
   props: ['type', 'item'],      // type: all/single; item: e.g. 333, 444...
-  inject: ['scores'],           // 父组件请provide 'scores'
+  inject: ['scores', 'reload'],           // 父组件请provide 'scores'
   computed: {
     // 如果是single模式，给出该项目的成绩表
     spec_item_scores(){

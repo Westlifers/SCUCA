@@ -47,7 +47,7 @@
     <div class="container">
       <div class="footer-content d-flex justify-content-between align-items-center flex-wrap">
         <div class="logo">
-          <router-link to="/"><img :src="publicPath + 'img/f-logo.png'" alt=""></router-link>
+          <router-link to="/" @click="reload()"><img :src="publicPath + 'img/f-logo.png'" alt=""></router-link>
         </div>
         <div class="footer-social">
           <a href="#"><i class="fa fa-github"></i></a>
@@ -69,5 +69,6 @@ export default {
       publicPath: process.env.BASE_URL
     }
   },
+  inject: ['reload']
 }
 </script>

@@ -11,6 +11,18 @@ export default {
   components: {
     AllNavbar,
     FooterInfo
+  },
+  methods: {
+    reload(){
+      setTimeout(function () {
+        window.location.reload();
+      }, 100);
+    }
+  },
+  provide(){
+    return {
+      reload: this.reload
+    }
   }
 }
 </script>
