@@ -16,7 +16,7 @@ export default {
     reload(){
       setTimeout(function () {
         window.location.reload();
-      }, 100);
+      }, 1);
     }
   },
   provide(){
